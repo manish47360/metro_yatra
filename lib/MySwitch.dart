@@ -8,25 +8,20 @@ class MySwitch extends StatefulWidget {
 }
 
 class _MySwitchState extends State<MySwitch> {
-  bool light = true;
+  bool light = false;
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-
-        Text(light ? 'On': 'Off',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-        Switch(
-          // This bool value toggles the switch.
-          value: light,
-          activeColor: Colors.blue,
-          onChanged: (bool value) {
-            // This is called when the user toggles the switch.
-            setState(() {
-              light = value;
-            });
-          },
-        ),
-      ],
+    return Switch(
+      // This bool value toggles the switch.
+      value: light,
+      activeColor: Colors.blue,
+      onChanged: (bool value) {
+        // This is called when the user toggles the switch.
+        setState(() {
+          light = value;
+        });
+      },
     );
   }
 }
