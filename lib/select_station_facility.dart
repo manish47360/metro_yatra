@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class StationList extends StatefulWidget {
-  StationList({Key? key}) : super(key: key);
+class StationFacilityList extends StatefulWidget {
+  const StationFacilityList({Key? key}) : super(key: key);
 
   @override
-  State<StationList> createState() => _StationListState();
+  State<StationFacilityList> createState() => _StationFacilityListState();
 }
 
-class _StationListState extends State<StationList> {
+class _StationFacilityListState extends State<StationFacilityList> {
   String search = '';
   final stationSelected = TextEditingController();
   final List<String> station = [
@@ -61,7 +61,7 @@ class _StationListState extends State<StationList> {
         .map(
           (e) => ListTile(
             title: Text(e),
-            onTap: () => Navigator.pop(context, e),
+            onTap: () => Navigator.pushNamed(context, 'station_facility', arguments: e),
           ),
         )
         .toList();

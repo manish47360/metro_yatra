@@ -18,7 +18,7 @@ class _MetroState extends State<Metro> {
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const StationList()),
+      MaterialPageRoute(builder: (context) => StationList()),
     );
     if (!mounted) return;
     setState(() => departStation = result);
@@ -29,7 +29,7 @@ class _MetroState extends State<Metro> {
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const StationList()),
+      MaterialPageRoute(builder: (context) => StationList()),
     );
     if (departStation == result) {
       showDialog(
@@ -215,7 +215,7 @@ class _MetroState extends State<Metro> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             InkWell(
-              onTap: () => Navigator.pushNamed(context, 'station_facility'),
+              onTap: () => Navigator.pushNamed(context, 'station_facility_list'),
               child: Padding(
                 padding:
                     const EdgeInsets.only(left: 10.0, top: 10.0, bottom: 10),

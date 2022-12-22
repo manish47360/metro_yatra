@@ -1,6 +1,4 @@
-import 'package:dropdownfield2/dropdownfield2.dart';
 import 'package:flutter/material.dart';
-import 'package:metro_yatra/select_station.dart';
 
 class Facility extends StatefulWidget {
   const Facility({Key? key}) : super(key: key);
@@ -25,19 +23,7 @@ class _FacilityState extends State<Facility> {
           //height: MediaQuery.of(context).size.height * .2,
           padding: const EdgeInsets.all(30.0),
           child: Column(
-            children: <Widget>[
-              DropDownField(
-                controller: stationSelected,
-                hintText: "select station",
-                enabled: true,
-                itemsVisibleInDropdown: station.length,
-                items: station,
-                onValueChanged: (value){
-                  setState((){
-                    // selectStation = value;
-                  });
-                },
-              ),
+            children: const [
             ],
           ),
         ),

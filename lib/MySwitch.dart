@@ -13,7 +13,8 @@ class _MySwitchState extends State<MySwitch> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(light ? 'On': 'Off'),
+
+        Text(light ? 'On': 'Off',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
         Switch(
           // This bool value toggles the switch.
           value: light,
