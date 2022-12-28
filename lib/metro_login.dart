@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metro_yatra/MyAlertDialog.dart';
+import 'package:metro_yatra/my_alert_dialog.dart';
 import 'package:metro_yatra/select_station.dart';
 
 class Metro extends StatefulWidget {
@@ -184,21 +184,15 @@ class _MetroState extends State<Metro> {
                   Navigator.pushNamed(context, 'metro_route');
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey.shade100,
                   fixedSize: const Size(300, 60),
-                  textStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                  primary: Colors.grey[100],
-                  onPrimary: Colors.black87,
                   elevation: 15,
-                  // side: const BorderSide(color: Colors.black87, width: 1.5),
                   alignment: Alignment.center,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    Text('Show Route'),
+                    Text('Show Route', style: TextStyle(color: Colors.black87, fontSize: 30.0, fontWeight: FontWeight.bold),),
                   ],
                 ),
               ),
