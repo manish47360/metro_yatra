@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_yatra/card.dart';
 
 import 'my_switch.dart';
 
@@ -9,78 +10,78 @@ class MetroRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Route'),
       ),
       body: Container(
-        padding: const EdgeInsets.only(top: 25),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Set Alert',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        // color: Colors.purpleAccent,
+        padding: const EdgeInsets.only(top: 5),
+        child: Card(
+          color: Colors.grey.shade200,
+          child: SizedBox(
+            height: 220,
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const SizedBox(
+                  height: 10.0,
                 ),
-                MySwitch()
-              ],
-            ),
-            const SizedBox(
-              height: 10.0,
-            ),
-            Material(
-              elevation: 15,
-              child: Container(
-                padding: const EdgeInsets.only(bottom: 15),
-                height: 70,
-                color: Colors.grey,
-                child: Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: const [
                     Expanded(
-                      child: SizedBox(
-                        width: 200,
-                        height: 150,
-                        child: Center(
-                          child: Text(
-                            'Station',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                      child: MyCard(
+                        Icons.door_sliding_outlined,
+                        '9',
+                        'Station',
                       ),
                     ),
                     Expanded(
-                      child: SizedBox(
-                        width: 200,
-                        height: 150,
-                        child: Center(
-                          child: Text(
-                            'Fair and Time',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      child: MyCard(
+                          Icons.directions_run_rounded, '2', 'Interchange'),
                     ),
-                    Expanded(
-                      child: SizedBox(
-                        width: 200,
-                        height: 150,
-                        child: Center(
-                          child: Text(
-                            'Interchange',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
-              ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: const [
+                    Expanded(
+                      child: MyCard(Icons.currency_rupee, '20', 'Fare'),
+                    ),
+                    Expanded(
+                        child: MyCard(
+                      Icons.watch_later_outlined,
+                      '20',
+                      'Time',
+                    )),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            'Notify when my destination station is near or their is any interchange of lines',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      MySwitch()
+                    ],
+                  ),
+                )
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
