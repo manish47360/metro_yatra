@@ -56,7 +56,7 @@ class _MetroState extends State<Metro> {
         //height: MediaQuery.of(context).size.height,
         padding: const EdgeInsets.all(20.0),
         child: Padding(
-          padding: const EdgeInsets.only(top: 200),
+          padding: const EdgeInsets.only(top: 250),
           child: Card(
             color: Colors.grey.shade200,
             //padding: const EdgeInsets.only(top: 130),
