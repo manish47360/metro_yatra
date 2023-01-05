@@ -26,7 +26,7 @@ class _StationFacilityListState extends State<StationFacilityList> {
         elevation: 15,
         backgroundColor: Colors.blue,
         title: const Text(
-          "Station Facilities",
+          "Search Station",
         ),
         centerTitle: true,
       ),
@@ -57,7 +57,7 @@ class _StationFacilityListState extends State<StationFacilityList> {
 
   List<ListTile> getListTiles(BuildContext context, String search) {
     return station
-        .where((element) => search.isEmpty || element.startsWith(search))
+        .where((element) => search.isEmpty || element.toLowerCase().startsWith(search.toLowerCase()))
         .map(
           (e) => ListTile(
             title: Text(e),

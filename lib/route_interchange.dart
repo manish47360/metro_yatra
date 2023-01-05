@@ -9,9 +9,9 @@ class RouteInterchange extends StatelessWidget {
     return Row(
 
       children: const [
-        Padding(padding: EdgeInsets.only(left: 20)),
+        Padding(padding: EdgeInsets.only(left: 10)),
         Icon(Icons.directions_walk,color: Colors.black,),
-        SizedBox(width: 60,),
+        SizedBox(width: 20,),
         Text("Interchange",style: TextStyle(fontSize: 20),),
       ],
     );
