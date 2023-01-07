@@ -19,7 +19,7 @@ class _MetroState extends State<Metro> {
     // Navigator.pop on the Selection Screen.
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StationList()),
+      MaterialPageRoute(builder: (context) => const StationList()),
     );
     if (result == null) return;
     if (!mounted) return;
@@ -54,103 +54,106 @@ class _MetroState extends State<Metro> {
         decoration: const BoxDecoration(
             image: DecorationImage(image: AssetImage('assets/dmrc.png'))),
         //height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.all(20.0),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 200),
-          child: Card(
-            color: Colors.grey.shade200,
-            //padding: const EdgeInsets.only(top: 130),
-            child: SizedBox(
-              //width: 100,
-              height: 370,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SelectStationButton(
-                      departStation, _navigateAndDisplaySelection),
-                  Container(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        if (departStation == 'Depart Station' ||
-                            destinationStation == 'Destination Station') {
-                          showDialog(
-                            context: context,
-                            builder: (context) => MyAlertDialog(
-                                'Select Route', 'Please select station'),
-                          );
-                          return;
-                        }
-                        setState(() {
-                          final temp = departStation;
-                          departStation = destinationStation;
-                          destinationStation = temp;
-                        });
-                      },
-                      backgroundColor: Colors.grey,
-                      child: const Icon(Icons.import_export_rounded, size: 30),
+        padding: const EdgeInsets.all(10.0),
+        child: Expanded(
+          child: Padding(
+
+            padding: const EdgeInsets.only(top: 300),
+            child: Card(
+              color: Colors.grey,
+              //padding: const EdgeInsets.only(top: 130),
+              child: SizedBox(
+                //width: 100,
+                height: 370,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    SelectStationButton(
+                        departStation, _navigateAndDisplaySelection),
+                    Container(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          if (departStation == 'Depart Station' ||
+                              destinationStation == 'Destination Station') {
+                            showDialog(
+                              context: context,
+                              builder: (context) => MyAlertDialog(
+                                  'Select Route', 'Please select station'),
+                            );
+                            return;
+                          }
+                          setState(() {
+                            final temp = departStation;
+                            departStation = destinationStation;
+                            destinationStation = temp;
+                          });
+                        },
+                        backgroundColor: Colors.grey,
+                        child: const Icon(Icons.import_export_rounded, size: 30),
+                      ),
                     ),
-                  ),
-                  /*SizedBox(
-                    height: 20.0,
-                  ),*/
-                  SelectStationButton(destinationStation, _destinationStation),
-                  const SizedBox(height: 15),
-                  Card(
-                    color: Colors.white,
-                    child: SizedBox(
-                      height: 60,
+                    /*SizedBox(
+                      height: 20.0,
+                    ),*/
+                    SelectStationButton(destinationStation, _destinationStation),
+                    const SizedBox(height: 15),
+                    Card(
+                      color: Colors.white,
+                      child: SizedBox(
+                        height: 60,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Icon(
+                              (Icons.calendar_month),
+                              size: 40.0,
+                            ),
+                            Text(
+                              '${today.day}-${today.month}-${today.year}',
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              width: 30.0,
+                            ),
+                            const Icon(
+                              (Icons.timer_outlined),
+                              size: 40.0,
+                            ),
+                            Text(
+                              '${today.hour}:${today.minute}:${today.second}',
+                              style: const TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'metro_route');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(300, 60),
+                        textStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                        alignment: Alignment.center,
+                        backgroundColor: Colors.white
+                      ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Icon(
-                            (Icons.calendar_month),
-                            size: 40.0,
-                          ),
-                          Text(
-                            '${today.day}-${today.month}-${today.year}',
-                            style: const TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            width: 30.0,
-                          ),
-                          const Icon(
-                            (Icons.timer_outlined),
-                            size: 40.0,
-                          ),
-                          Text(
-                            '${today.hour}:${today.minute}:${today.second}',
-                            style: const TextStyle(
-                                fontSize: 20.0, fontWeight: FontWeight.bold),
-                          ),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Show Route', style: TextStyle(color: Colors.black87),),
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'metro_route');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(300, 60),
-                      textStyle: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                      alignment: Alignment.center,
-                      backgroundColor: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text('Show Route', style: TextStyle(color: Colors.black87),),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

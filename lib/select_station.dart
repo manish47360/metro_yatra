@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class StationList extends StatefulWidget {
-  StationList({Key? key}) : super(key: key);
+  const StationList({Key? key}) : super(key: key);
 
   @override
   State<StationList> createState() => _StationListState();
@@ -57,7 +57,7 @@ class _StationListState extends State<StationList> {
 
   List<ListTile> getListTiles(BuildContext context, String search) {
     return station
-        .where((element) => search.isEmpty || element.startsWith(search))
+        .where((element) => search.isEmpty || element.toLowerCase().startsWith(search.toLowerCase()))
         .map(
           (e) => ListTile(
             title: Text(e),
