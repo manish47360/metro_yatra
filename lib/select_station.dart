@@ -16,13 +16,6 @@ class _StationListRouteState extends State<StationListRoute> {
   StationList stationList = stationService.stationList;
   String search = '';
   final stationSelected = TextEditingController();
-  final List<String> station = [
-    "Dwarka",
-    "Dwarka Mor",
-    "Najafgarh",
-    "New Delhi",
-    "GTB Nagar"
-  ];
 
   @override
   Widget build(BuildContext context) {
