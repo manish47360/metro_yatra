@@ -3,8 +3,8 @@ class DelhiMetroRouteResponse {
   String to;
   String from;
   String totalTime;
-  double fare;
-  List<Route> route;
+  int fare;
+  List<MetroLineRoute> route;
   int interchangeStations;
 
   DelhiMetroRouteResponse(
@@ -24,12 +24,12 @@ class DelhiMetroRouteResponse {
         from: json['from'],
         to: json['to'],
         totalTime: json['total_time'],
-        route: routeList.map((e) => Route.fromJson(e)).toList(),
-        interchangeStations: routeList.length);
+        route: routeList.map((e) => MetroLineRoute.fromJson(e)).toList(),
+        interchangeStations: routeList.length - 1);
   }
 }
 
-class Route {
+class MetroLineRoute {
   String line;
   int lineNo;
   List<String> mapPath;
@@ -37,7 +37,7 @@ class Route {
   String towardsStation;
   String platformName;
 
-  Route(
+  MetroLineRoute(
       {required this.line,
       required this.lineNo,
       required this.mapPath,
@@ -45,12 +45,13 @@ class Route {
       required this.towardsStation,
       required this.platformName});
 
-  factory Route.fromJson(Map<String, dynamic> json) {
+  factory MetroLineRoute.fromJson(Map<String, dynamic> json) {
     var pathList = json['path'] as List;
-    return Route(
+    var mapPathList = List<String>.from(json['map-path']);
+    return MetroLineRoute(
         line: json['line'],
         lineNo: json['line_no'],
-        mapPath: json['map-path'],
+        mapPath: mapPathList,
         path: pathList.map((e) => Path.fromJson(e)).toList(),
         towardsStation: json['towards_station'],
         platformName: json['platform_name']);

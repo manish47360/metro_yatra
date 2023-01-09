@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/bottom_navigation_route.dart';
+import 'package:metro_yatra/metro_route.dart';
 import 'package:metro_yatra/my_alert_dialog.dart';
 import 'package:metro_yatra/select_station.dart';
 import 'package:metro_yatra/select_station_button.dart';
+import 'package:metro_yatra/services/station_service.dart';
 
 class Metro extends StatefulWidget {
   const Metro({Key? key}) : super(key: key);
@@ -12,17 +17,16 @@ class Metro extends StatefulWidget {
 }
 
 class _MetroState extends State<Metro> {
-  String departStation = 'Depart Station';
-  String destinationStation = 'Destination Station';
+  StationCode? departStation;// = 'Depart Station';
+  StationCode? destinationStation;// = 'Destination Station';
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    final result = await Navigator.push(
+    StationCode result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const StationList()),
-    );
-    if (result == null) return;
+      MaterialPageRoute(builder: (context) => const StationListRoute()),
+    ) as StationCode;
     if (!mounted) return;
     setState(() => departStation = result);
   }
@@ -30,10 +34,10 @@ class _MetroState extends State<Metro> {
   Future<void> _destinationStation(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    final result = await Navigator.push(
+    StationCode result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StationList()),
-    );
+      MaterialPageRoute(builder: (context) => const StationListRoute()),
+    ) as StationCode;
     if (departStation == result) {
       showDialog(
           context: context,
@@ -60,7 +64,6 @@ class _MetroState extends State<Metro> {
           alignment: Alignment.bottomCenter,
           child: Card(
             color: Colors.grey,
-            //padding: const EdgeInsets.only(top: 130),
             child: SizedBox(
               //width: 100,
               height: 370,
@@ -69,17 +72,18 @@ class _MetroState extends State<Metro> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SelectStationButton(
-                      departStation, _navigateAndDisplaySelection),
+                      departStation == null ? 'Depart Station' : departStation!.name, _navigateAndDisplaySelection),
                   Container(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        if (departStation == 'Depart Station' ||
-                            destinationStation == 'Destination Station') {
+                        if (departStation == null ||
+                            destinationStation == null) {
                           showDialog(
                             context: context,
-                            builder: (context) => MyAlertDialog(
-                                'Select Route', 'Please select station'),
+                            builder: (context) =>
+                                MyAlertDialog(
+                                    'Select Route', 'Please select station'),
                           );
                           return;
                         }
@@ -91,14 +95,11 @@ class _MetroState extends State<Metro> {
                       },
                       backgroundColor: Colors.grey,
                       child:
-                          const Icon(Icons.import_export_rounded, size: 30),
+                      const Icon(Icons.import_export_rounded, size: 30),
                     ),
                   ),
-                  /*SizedBox(
-                    height: 20.0,
-                  ),*/
                   SelectStationButton(
-                      destinationStation, _destinationStation),
+                      destinationStation == null ? 'Destination Station' : destinationStation!.name, _destinationStation),
                   const SizedBox(height: 15),
                   Card(
                     color: Colors.white,
@@ -135,7 +136,12 @@ class _MetroState extends State<Metro> {
                   const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'metro_route');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MetroRoute(departStation: departStation!.code, destinationStation: destinationStation!.code,),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         fixedSize: const Size(300, 60),

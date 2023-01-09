@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class RouteStation extends StatelessWidget {
   final StationRoute station;
   final StationLineColor lineColor;
+  final String stationName;
+  final int stationCount;
 
-  const RouteStation({super.key, required this.station, required this.lineColor});
+  const RouteStation({super.key, required this.station, required this.lineColor, required this.stationName, required this.stationCount});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,13 @@ class RouteStation extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: const Text('1'),
+                  child: Text(stationCount.toString()),
                 ),
               ),
             ],
           ),
         ),
-        const Text('    Dwarka Mor '),
+        Text('    $stationName '),
       ],
     );
   }
@@ -63,6 +65,10 @@ class StationLineColor{
         return Colors.blue;
       case 'green':
         return Colors.green;
+      case 'yellow':
+        return Colors.yellow;
+      case 'red':
+        return Colors.red;
       default:
         return Colors.grey;
     }

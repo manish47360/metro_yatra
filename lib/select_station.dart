@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/station_service.dart';
+import 'package:http/http.dart' as http;
 
-class StationList extends StatefulWidget {
-  const StationList({Key? key}) : super(key: key);
+var stationService = locator<StationService>();
+
+class StationListRoute extends StatefulWidget {
+  const StationListRoute({Key? key}) : super(key: key);
 
   @override
-  State<StationList> createState() => _StationListState();
+  State<StationListRoute> createState() => _StationListRouteState();
 }
 
-class _StationListState extends State<StationList> {
+class _StationListRouteState extends State<StationListRoute> {
+  StationList stationList = stationService.stationList;
   String search = '';
   final stationSelected = TextEditingController();
   final List<String> station = [
@@ -56,11 +62,11 @@ class _StationListState extends State<StationList> {
   }
 
   List<ListTile> getListTiles(BuildContext context, String search) {
-    return station
-        .where((element) => search.isEmpty || element.toLowerCase().startsWith(search.toLowerCase()))
+    return stationList.stationCodes
+        .where((element) => search.isEmpty || element.name.toLowerCase().contains(search.toLowerCase()))
         .map(
           (e) => ListTile(
-            title: Text(e),
+            title: Text(e.name),
             onTap: () => Navigator.pop(context, e),
           ),
         )
