@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/bottom_navigation_route.dart';
 import 'package:metro_yatra/metro_route.dart';
@@ -17,8 +16,8 @@ class Metro extends StatefulWidget {
 }
 
 class _MetroState extends State<Metro> {
-  StationCode? departStation;// = 'Depart Station';
-  StationCode? destinationStation;// = 'Destination Station';
+  StationCode? departStation;
+  StationCode? destinationStation;
 
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
@@ -136,6 +135,9 @@ class _MetroState extends State<Metro> {
                   const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
+                      if (departStation == null || destinationStation == null){
+                        return;
+                      }
                       Navigator.push(
                         context,
                         MaterialPageRoute(

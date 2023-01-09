@@ -31,7 +31,7 @@ class StationService {
     }
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
     stationList = StationList.fromJson(parsed);
-    return StationList.fromJson(parsed);
+    return stationList;
   }
 }
 

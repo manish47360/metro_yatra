@@ -29,7 +29,7 @@ class _SelectStationButtonState extends State<SelectStationButton> {
         children: [
           Text(
             widget.buttonText,
-            style: const TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87, fontSize: 20),
           ),
           const Icon(
             Icons.search_outlined,

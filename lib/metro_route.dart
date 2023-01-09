@@ -6,30 +6,14 @@ import 'package:intl/intl.dart';
 import 'package:metro_yatra/card.dart';
 import 'package:metro_yatra/route_interchange.dart';
 import 'package:metro_yatra/route_station.dart';
+import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/route_service.dart';
 
 import 'delhi_metro_route_response.dart';
 import 'my_switch.dart';
 import 'package:http/http.dart' as http;
 
-Future<DelhiMetroRouteResponse> fetchRoutes(
-    http.Client client, String departStation, String destinationStation) async {
-  final DateTime now = DateTime.now();
-  final DateFormat formatter =
-      DateFormat('yyyy-MM-ddTHH:mm:ss'); //2023-01-06T07:57:31.103
-  final String formattedDateTime = formatter.format(now);
-  String endpoint =
-      'http://delhimetrobackendtest-env.eba-bvjxgwjk.ap-northeast-1.elasticbeanstalk.com/delhi-metro-backend/route/$departStation/$destinationStation/short-distance/$formattedDateTime';
-  Uri uri = Uri.parse(endpoint);
-  print('URI: $uri');
-  final response = await client.get(uri);
-  return compute(parseRoutes, response.body);
-}
-
-DelhiMetroRouteResponse parseRoutes(String responseBody) {
-  print('response body: $responseBody');
-  final parsed = jsonDecode(responseBody);
-  return DelhiMetroRouteResponse.fromJson(Map<String, dynamic>.from(parsed));
-}
+var routeService = locator<RouteService>();
 
 class MetroRoute extends StatelessWidget {
   final String departStation, destinationStation;
@@ -46,7 +30,7 @@ class MetroRoute extends StatelessWidget {
           title: const Text('Route'),
         ),
         body: FutureBuilder<DelhiMetroRouteResponse>(
-          future: fetchRoutes(http.Client(), departStation, destinationStation),
+          future: routeService.fetchRoutes(http.Client(), departStation, destinationStation),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               print(snapshot.stackTrace);
