@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:metro_yatra/select_station.dart';
+import 'package:metro_yatra/services/station_service.dart';
 
 class StationFacilityList extends StatefulWidget {
   const StationFacilityList({Key? key}) : super(key: key);
@@ -8,15 +10,9 @@ class StationFacilityList extends StatefulWidget {
 }
 
 class _StationFacilityListState extends State<StationFacilityList> {
+  StationList stationList = stationService.stationList;
   String search = '';
   final stationSelected = TextEditingController();
-  final List<String> station = [
-    "Dwarka",
-    "Dwarka Mor",
-    "Najafgarh",
-    "New Delhi",
-    "GTB Nagar"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +52,11 @@ class _StationFacilityListState extends State<StationFacilityList> {
   }
 
   List<ListTile> getListTiles(BuildContext context, String search) {
-    return station
-        .where((element) => search.isEmpty || element.toLowerCase().startsWith(search.toLowerCase()))
+    return stationList.stationCodes
+        .where((element) => search.isEmpty || element.name.toLowerCase().startsWith(search.toLowerCase()))
         .map(
           (e) => ListTile(
-            title: Text(e),
+            title: Text(e.name),
             onTap: () => Navigator.pushNamed(context, 'station_facility', arguments: e),
           ),
         )
