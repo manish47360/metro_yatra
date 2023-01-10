@@ -16,7 +16,6 @@ void main() {
       routes: {
         'metro_login': (context) => const Metro(),
         'station_facility_list': (context) => const StationFacilityList(),
-        'station_facility': (context) => const Facility(),
         'first_last_metro': (context) => const FirstLastMetro(),
         'nearest_metro': (context) => const NearestStation()
       },

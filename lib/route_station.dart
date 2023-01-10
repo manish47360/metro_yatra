@@ -69,8 +69,18 @@ class StationLineColor{
         return Colors.yellow;
       case 'red':
         return Colors.red;
-      default:
+        case 'pink':
+        return Colors.pink;
+      case 'grey':
         return Colors.grey;
+      case 'orange':
+        return Colors.orange;
+      case 'magenta':
+        return Colors.pinkAccent;
+      case 'violet':
+        return Colors.purple;
+      default:
+        return Colors.blueGrey;
     }
   }
 }

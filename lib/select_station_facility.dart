@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/select_station.dart';
 import 'package:metro_yatra/services/station_service.dart';
+import 'package:metro_yatra/station_facility.dart';
 
 class StationFacilityList extends StatefulWidget {
   const StationFacilityList({Key? key}) : super(key: key);
@@ -57,7 +58,9 @@ class _StationFacilityListState extends State<StationFacilityList> {
         .map(
           (e) => ListTile(
             title: Text(e.name),
-            onTap: () => Navigator.pushNamed(context, 'station_facility', arguments: e),
+            onTap: () => Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Facility(stationCode: e),
+            )),
           ),
         )
         .toList();
