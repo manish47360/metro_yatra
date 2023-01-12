@@ -4,9 +4,9 @@ class RouteStation extends StatelessWidget {
   final StationRoute station;
   final StationLineColor lineColor;
   final String stationName;
-  final int stationCount;
+ // final int stationCount;
 
-  const RouteStation({super.key, required this.station, required this.lineColor, required this.stationName, required this.stationCount});
+  const RouteStation({super.key, required this.station, required this.lineColor, required this.stationName});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class RouteStation extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                  child: Text(stationCount.toString()),
+                 // child: Text(stationCount.toString()),
                 ),
               ),
             ],
@@ -62,15 +62,15 @@ class StationLineColor{
   Color setActualColor(String color){
     switch(color.toLowerCase()){
       case 'blue':
-        return Colors.blue;
+        return Color(0xFF2196F3);
       case 'green':
         return Colors.green;
       case 'yellow':
         return Colors.yellow;
       case 'red':
-        return Colors.red;
+        return Color(0xFFF94336);
         case 'pink':
-        return Colors.pink;
+        return Color(0xFFF48FB1);
       case 'grey':
         return Colors.grey;
       case 'orange':

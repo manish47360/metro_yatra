@@ -99,27 +99,27 @@ class FacilityBody extends StatelessWidget {
     List<Widget> rows = [];
     for (MetroGate gate in gates) {
       rows.add(
-          Row(
-            children: [
-           const Icon(Icons.door_sliding),
+        Row(
+          children: [
+            const Icon(Icons.door_sliding),
             const SizedBox(
-            width: 20,
-          ),
+              width: 20,
+            ),
             Text(
-            gate.gateName,
-            style: const TextStyle(fontSize: 20),
-          ),
-            const SizedBox(
-            width: 20,
-          ),
-            Expanded(
-             child: Text(
-              gate.location,
+              gate.gateName,
               style: const TextStyle(fontSize: 20),
             ),
-          )
-        ],
-      ),
+            const SizedBox(
+              width: 20,
+            ),
+            Expanded(
+              child: Text(
+                gate.location,
+                style: const TextStyle(fontSize: 20),
+              ),
+            )
+          ],
+        ),
       );
     }
     return Column(
@@ -198,9 +198,10 @@ class FacilityBody extends StatelessWidget {
       ),
     ]);
   }
-  Widget getFacility(List<MetroFacility> facilities){
+
+  Widget getFacility(List<MetroFacility> facilities) {
     List<Widget> rows = [];
-    for(MetroFacility facility in facilities){
+    for (MetroFacility facility in facilities) {
       rows.add(
         Row(
           children: [
@@ -214,7 +215,6 @@ class FacilityBody extends StatelessWidget {
             )
           ],
         ),
-
       );
     }
     return Column(
@@ -244,23 +244,71 @@ class FacilityBody extends StatelessWidget {
       ],
     );
   }
-  Widget getPlatforms(List<MetroPlatform> platforms){
+
+  Widget getPlatforms(List<MetroPlatform> platforms) {
     List<Widget> rows = [];
-    for(MetroPlatform platform in platforms){
+    for (MetroPlatform platform in platforms) {
       rows.add(
         Row(
           children: [
-            const Icon(Icons.add),
-            const SizedBox(
-              width: 20,
+            const Icon(Icons.ev_station),
+            Flexible(
+              child: Card(
+                color: Colors.grey[200],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+
+                        Text(
+                          platform.platformName,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Towards Station 1:",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          platform.trainTowards.stationName,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          "Towards Station 2:",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          platform.trainTowardsSecond != null ? platform.trainTowardsSecond!.stationName : 'NA',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
-            Text(
-              platform.platformName,
-              style: const TextStyle(fontSize: 20),
-            )
           ],
         ),
-
       );
     }
     return Column(

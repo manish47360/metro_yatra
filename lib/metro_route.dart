@@ -52,7 +52,7 @@ class MetroRoute extends StatelessWidget {
 class RoutePage extends StatelessWidget {
   final DelhiMetroRouteResponse response;
   late int totalPaths;
-  int stationCount = 1;
+  //int stationCount = 1;
 
   RoutePage(this.response, {super.key}) {
     totalPaths = getTotalPaths();
@@ -172,7 +172,7 @@ class RoutePage extends StatelessWidget {
                   : StationRoute.INTERMEDIATE,
           lineColor: StationLineColor(lineColor),
           stationName: path.name,
-          stationCount: stationCount++,
+          //stationCount: stationCount++,
         ),
       );
       counter++;
