@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
+import '../config/app_config.dart';
+import '../service_locator.dart';
+
+var appConfig = locator<AppConfig>();
+
 class StationService {
   static StationService? _instance;
   late final StationList stationList;
@@ -19,7 +24,7 @@ class StationService {
 
   Future<StationList> _fetchStations(http.Client client) async {
     String endpoint =
-        'http://delhimetrobackendtest-env.eba-bvjxgwjk.ap-northeast-1.elasticbeanstalk.com/stations';
+        '${appConfig.metroHost}${appConfig.stationEndpoint}';
     Uri uri = Uri.parse(endpoint);
     var response = await client.get(uri);
     return compute(parseStations, response.body);

@@ -1,0 +1,6 @@
+{
+  "metro-backend-url": "http://delhimetrobackendtest-env.eba-bvjxgwjk.ap-northeast-1.elasticbeanstalk.com",
+  "stations-endpoint": "/stations",
+  "search-stations": "/delhi-metro-backend/route/{}/{}/short-distance/{}",
+  "stations-info": "/station-info/{}/word"
+}

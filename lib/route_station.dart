@@ -69,6 +69,8 @@ class StationLineColor{
         return Colors.yellow;
       case 'red':
         return Colors.red;
+      case 'pink':
+        return Colors.pink;
       default:
         return Colors.grey;
     }
