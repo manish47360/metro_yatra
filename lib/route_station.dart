@@ -4,7 +4,6 @@ class RouteStation extends StatelessWidget {
   final StationRoute station;
   final StationLineColor lineColor;
   final String stationName;
- // final int stationCount;
 
   const RouteStation({super.key, required this.station, required this.lineColor, required this.stationName});
 
@@ -35,7 +34,6 @@ class RouteStation extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
-                 // child: Text(stationCount.toString()),
                 ),
               ),
             ],

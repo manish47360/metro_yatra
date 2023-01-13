@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/bottom_navigation_route.dart';
 import 'package:metro_yatra/metro_route.dart';
@@ -22,21 +20,27 @@ class _MetroState extends State<Metro> {
   Future<void> _navigateAndDisplaySelection(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    StationCode result = await Navigator.push(
+    StationCode? result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const StationListRoute()),
-    ) as StationCode;
+    ) as StationCode?;
     if (!mounted) return;
+    if (result == null) {
+      return;
+    }
     setState(() => departStation = result);
   }
 
   Future<void> _destinationStation(BuildContext context) async {
     // Navigator.push returns a Future that completes after calling
     // Navigator.pop on the Selection Screen.
-    StationCode result = await Navigator.push(
+    StationCode? result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const StationListRoute()),
-    ) as StationCode;
+    ) as StationCode?;
+    if (result == null) {
+      return;
+    }
     if (departStation == result) {
       showDialog(
           context: context,
@@ -71,7 +75,10 @@ class _MetroState extends State<Metro> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   SelectStationButton(
-                      departStation == null ? 'Depart Station' : departStation!.name, _navigateAndDisplaySelection),
+                      departStation == null
+                          ? 'Depart Station'
+                          : departStation!.name,
+                      _navigateAndDisplaySelection),
                   Container(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
                     child: FloatingActionButton(
@@ -80,9 +87,8 @@ class _MetroState extends State<Metro> {
                             destinationStation == null) {
                           showDialog(
                             context: context,
-                            builder: (context) =>
-                                MyAlertDialog(
-                                    'Select Route', 'Please select station'),
+                            builder: (context) => MyAlertDialog(
+                                'Select Route', 'Please select station'),
                           );
                           return;
                         }
@@ -93,12 +99,14 @@ class _MetroState extends State<Metro> {
                         });
                       },
                       backgroundColor: Colors.grey,
-                      child:
-                      const Icon(Icons.import_export_rounded, size: 30),
+                      child: const Icon(Icons.import_export_rounded, size: 30),
                     ),
                   ),
                   SelectStationButton(
-                      destinationStation == null ? 'Destination Station' : destinationStation!.name, _destinationStation),
+                      destinationStation == null
+                          ? 'Destination Station'
+                          : destinationStation!.name,
+                      _destinationStation),
                   const SizedBox(height: 15),
                   Card(
                     color: Colors.white,
@@ -135,13 +143,16 @@ class _MetroState extends State<Metro> {
                   const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () {
-                      if (departStation == null || destinationStation == null){
+                      if (departStation == null || destinationStation == null) {
                         return;
                       }
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MetroRoute(departStation: departStation!.code, destinationStation: destinationStation!.code,),
+                          builder: (context) => MetroRoute(
+                            departStation: departStation!.code,
+                            destinationStation: destinationStation!.code,
+                          ),
                         ),
                       );
                     },
