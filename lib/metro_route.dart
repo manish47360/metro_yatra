@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:metro_yatra/card.dart';
 import 'package:metro_yatra/route_interchange.dart';
 import 'package:metro_yatra/route_station.dart';
@@ -26,8 +30,7 @@ class MetroRoute extends StatelessWidget {
           title: const Text('Route'),
         ),
         body: FutureBuilder<DelhiMetroRouteResponse>(
-          future: routeService.fetchRoutes(
-              http.Client(), departStation, destinationStation),
+          future: routeService.fetchRoutes(http.Client(), departStation, destinationStation),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               print(snapshot.stackTrace);
@@ -48,8 +51,20 @@ class MetroRoute extends StatelessWidget {
 
 class RoutePage extends StatelessWidget {
   final DelhiMetroRouteResponse response;
+  late int totalPaths;
+  //int stationCount = 1;
 
-  const RoutePage(this.response, {super.key});
+  RoutePage(this.response, {super.key}) {
+    totalPaths = getTotalPaths();
+  }
+
+  int getTotalPaths() {
+    int total = 0;
+    for (MetroLineRoute route in response.route) {
+      total = total + route.path.length;
+    }
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +78,7 @@ class RoutePage extends StatelessWidget {
             child: SizedBox(
               height: 220,
               child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const SizedBox(
                     height: 10.0,
@@ -79,10 +95,9 @@ class RoutePage extends StatelessWidget {
                       ),
                       Expanded(
                         child: MyCard(
-                          Icons.directions_run_rounded,
-                          response.interchangeStations.toString(),
-                          'Interchange',
-                        ),
+                            Icons.directions_run_rounded,
+                            response.interchangeStations.toString(),
+                            'Interchange'),
                       ),
                     ],
                   ),
