@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/select_station_facility.dart';
+import 'package:metro_yatra/services/notification_service.dart';
 import './first_last_metro.dart';
 import './metro_login.dart';
 import './nearest_metro.dart';
 import './station_facility.dart';
 import './service_locator.dart';
 
-void main({String? env}) {
+Future<void> main({String? env}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService().init();
   setupLocator(env);
   runApp(
     MaterialApp(
