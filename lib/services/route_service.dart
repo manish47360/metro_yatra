@@ -5,7 +5,7 @@ import 'package:metro_yatra/config/app_config.dart';
 import 'package:metro_yatra/delhi_metro_route_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/service_locator.dart';
 
 var appConfig = locator<AppConfig>();
 

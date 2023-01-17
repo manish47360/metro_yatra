@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:metro_yatra/select_station_facility.dart';
 import './first_last_metro.dart';
 import './metro_login.dart';
 import './nearest_metro.dart';
-import './station_facility.dart';
-import './service_locator.dart';
+import 'services/service_locator.dart';
 
 void main({String? env}) {
   WidgetsFlutterBinding.ensureInitialized();

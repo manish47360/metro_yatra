@@ -3,23 +3,22 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 import '../config/app_config.dart';
-import '../service_locator.dart';
+import 'service_locator.dart';
 
 var appConfig = locator<AppConfig>();
 
 class StationService {
-  static StationService? _instance;
+  static final StationService _instance = StationService._internal();
   late final StationList stationList;
-  StationService(){
-    _init();
-  }
+  StationService._internal();
 
   void _init() async {
     stationList = await _fetchStations(http.Client());
   }
 
-  static StationService getInstance() {
-    return _instance ??= StationService();
+  static Future<StationService> getInstance() async {
+    _instance._init();
+    return _instance;
   }
 
   Future<StationList> _fetchStations(http.Client client) async {
@@ -38,6 +37,7 @@ class StationService {
     stationList = StationList.fromJson(parsed);
     return stationList;
   }
+
 }
 
 class StationList{

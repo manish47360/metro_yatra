@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/service_locator.dart';
 import 'package:metro_yatra/services/station_service.dart';
-import 'package:http/http.dart' as http;
 
 var stationService = locator<StationService>();
 

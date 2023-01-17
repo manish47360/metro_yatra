@@ -7,14 +7,13 @@ class DelhiMetroRouteResponse {
   List<MetroLineRoute> route;
   int interchangeStations;
 
-  DelhiMetroRouteResponse(
-      {required this.stations,
-      required this.to,
-      required this.from,
-      required this.totalTime,
-      required this.fare,
-      required this.route,
-      required this.interchangeStations});
+  DelhiMetroRouteResponse({required this.stations,
+    required this.to,
+    required this.from,
+    required this.totalTime,
+    required this.fare,
+    required this.route,
+    required this.interchangeStations});
 
   factory DelhiMetroRouteResponse.fromJson(Map<String, dynamic> json) {
     var routeList = json['route'] as List;
@@ -37,13 +36,12 @@ class MetroLineRoute {
   String towardsStation;
   String platformName;
 
-  MetroLineRoute(
-      {required this.line,
-      required this.lineNo,
-      required this.mapPath,
-      required this.path,
-      required this.towardsStation,
-      required this.platformName});
+  MetroLineRoute({required this.line,
+    required this.lineNo,
+    required this.mapPath,
+    required this.path,
+    required this.towardsStation,
+    required this.platformName});
 
   factory MetroLineRoute.fromJson(Map<String, dynamic> json) {
     var pathList = json['path'] as List;
@@ -61,10 +59,14 @@ class MetroLineRoute {
 class Path {
   String name;
   String status;
+  String? code;
+  double latitude;
+  double longitude;
 
-  Path(this.name, this.status);
+  Path(this.name, this.status, this.code, this.latitude, this.longitude);
 
   factory Path.fromJson(Map<String, dynamic> json) {
-    return Path(json['name'], json['status']);
+    return Path(json['name'], json['status'], json['code'], json['latitude'],
+        json['longitude']);
   }
 }

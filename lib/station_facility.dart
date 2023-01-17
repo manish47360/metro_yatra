@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/delhi_metro_station_facilities.dart';
-import 'package:metro_yatra/select_station.dart';
-import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/service_locator.dart';
 import 'package:metro_yatra/services/facility_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:metro_yatra/services/station_service.dart';

@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:metro_yatra/card.dart';
 import 'package:metro_yatra/route_interchange.dart';
 import 'package:metro_yatra/route_station.dart';
-import 'package:metro_yatra/service_locator.dart';
+import 'package:metro_yatra/services/service_locator.dart';
 import 'package:metro_yatra/services/route_service.dart';
 
 import 'delhi_metro_route_response.dart';
