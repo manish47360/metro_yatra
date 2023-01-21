@@ -197,8 +197,8 @@ class _MetroState extends State<Metro> {
                 routeName: 'Near by Station',
                 icon: Icons.train_outlined),
             BottomNavigationRoute(
-                nextPageName: 'first_last_metro',
-                routeName: 'Last Metro',
+                nextPageName: 'destination_alert',
+                routeName: 'Destination Alert',
                 icon: Icons.watch_later_outlined),
           ],
         ),

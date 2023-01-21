@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class DelhiMetroRouteResponse {
   int stations;
   String to;
@@ -25,6 +27,17 @@ class DelhiMetroRouteResponse {
         totalTime: json['total_time'],
         route: routeList.map((e) => MetroLineRoute.fromJson(e)).toList(),
         interchangeStations: routeList.length - 1);
+  }
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data = {};
+    data['stations'] = stations;
+    data['fare'] = fare;
+    data['from'] = from;
+    data['to'] = to;
+    data['total_time'] = totalTime;
+    data['route'] = route.map((e) => e.toJson()).toList();
+    return data;
   }
 }
 
@@ -54,6 +67,22 @@ class MetroLineRoute {
         towardsStation: json['towards_station'],
         platformName: json['platform_name']);
   }
+  
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['line'] = line;
+    data['line_no'] = lineNo;
+    data['map-path'] = mapPath;
+    data['path'] = path.map((e) => e.toJson()).toList();
+    data['towards_station'] = towardsStation;
+    data['platform_name'] = platformName;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return jsonEncode(toJson());
+  }
 }
 
 class Path {
@@ -68,5 +97,20 @@ class Path {
   factory Path.fromJson(Map<String, dynamic> json) {
     return Path(json['name'], json['status'], json['code'], json['latitude'],
         json['longitude']);
+  }
+
+  Map<String, dynamic> toJson(){
+    final Map<String, dynamic> data = {};
+    data['name'] = name;
+    data['status'] = status;
+    data['code'] = code;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    return data;
+  }
+
+  @override
+  String toString() {
+    return jsonEncode(toJson());
   }
 }

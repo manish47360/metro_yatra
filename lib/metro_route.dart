@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:metro_yatra/card.dart';
 import 'package:metro_yatra/route_interchange.dart';
@@ -50,20 +47,8 @@ class MetroRoute extends StatelessWidget {
 
 class RoutePage extends StatelessWidget {
   final DelhiMetroRouteResponse response;
-  late int totalPaths;
-  //int stationCount = 1;
 
-  RoutePage(this.response, {super.key}) {
-    totalPaths = getTotalPaths();
-  }
-
-  int getTotalPaths() {
-    int total = 0;
-    for (MetroLineRoute route in response.route) {
-      total = total + route.path.length;
-    }
-    return total;
-  }
+  const RoutePage(this.response, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -123,8 +108,8 @@ class RoutePage extends StatelessWidget {
                   ),
                   Expanded(
                     child: Row(
-                      children: const [
-                        Expanded(
+                      children: [
+                        const Expanded(
                           child: Padding(
                             padding: EdgeInsets.only(left: 10),
                             child: Text(
@@ -134,7 +119,7 @@ class RoutePage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        MySwitch()
+                        MySwitch(response: response)
                       ],
                     ),
                   )

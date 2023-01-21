@@ -1,34 +1,77 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:metro_yatra/services/location_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../delhi_metro_route_response.dart';
 
 const notificationChannelId = 'my_foreground';
 const notificationID = 999;
 
+@pragma('vm:entry-point')
 Future<void> onStart(ServiceInstance service) async {
   DartPluginRegistrant.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  var routeStations = prefs.getString('route-stations');
+  if (routeStations == null){
+    print('No Route Found');
+    return;
+  }
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
+  DelhiMetroRouteResponse response = DelhiMetroRouteResponse.fromJson(jsonDecode(routeStations));
+  List<MetroLineRoute> routes = response.route;
+  int totalStations = routes
+      .map((e) => e.path)
+      .map((e) => e.length)
+      .reduce((value, element) => value + element);
+  print(
+      'stations: $routes, totalLines: ${routes.length}, totalStations: $totalStations');
   print('onStart Called');
-  var counter = 40;
-  // bring to foreground
+  var routeCounter = 0;
+  var stationCounter = 0;
 
   Timer.periodic(
-    const Duration(seconds: 1),
+    const Duration(seconds: 15),
     (timer) async {
-      var position = await determinePosition();
-      print('timer going on lat: ${position.latitude}, lng: ${position.longitude}');
+      final position = await determinePosition();
+      if (routes.isNotEmpty) {
+        final upComingRoute = routes[routeCounter];
+        final upComingStation = upComingRoute.path[stationCounter];
+        print('up coming route: $upComingRoute');
+        print('up coming station: $upComingStation');
+        final distanceBetween = Geolocator.distanceBetween(
+            position.latitude,
+            position.longitude,
+            upComingStation.latitude,
+            upComingStation.longitude);
+        print('distance: $distanceBetween');
+        if (distanceBetween < 50) {
+          stationCounter++;
+          if (stationCounter >= upComingRoute.path.length) {
+            print("Please interchange here.");
+            routeCounter++;
+            if (routeCounter >= routes.length) {
+              print('You have arrived.');
+              return;
+            }
+            stationCounter = 0;
+          }
+        }
+      }
+      print(
+          'timer: ${DateTime.now()} - going on lat: ${position.latitude}, lng: ${position.longitude}');
       if (service is AndroidServiceInstance) {
-        print('this is a foreground service');
         service.on('stopService').listen(
           (event) async {
             flutterLocalNotificationsPlugin.cancel(notificationID);
-            service.invoke('serviceStopped', {'message': "Service Stopped"});
             await service.stopSelf();
           },
         );
@@ -55,6 +98,7 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
   static final NotificationService _notificationService =
       NotificationService._internal();
+  final service = FlutterBackgroundService();
 
   /*factory NotificationService() {
     return _notificationService;
@@ -67,8 +111,35 @@ class NotificationService {
     return _notificationService;
   }
 
+  Future<void> startService() async {
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      notificationChannelId, // id
+      'MY FOREGROUND SERVICE', // title
+      description:
+          'This channel is used for important notifications.', // description
+      importance: Importance.low, // importance must be at low or higher level
+    );
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+    await service.configure(
+      iosConfiguration: IosConfiguration(
+        onForeground: (service) => {},
+        autoStart: false,
+      ),
+      androidConfiguration: AndroidConfiguration(
+        onStart: onStart,
+        isForegroundMode: false,
+        autoStart: true,
+        notificationChannelId: notificationChannelId,
+        foregroundServiceNotificationId: notificationID,
+      ),
+    );
+    service.startService();
+  }
+
   Future<void> _init() async {
-    final service = FlutterBackgroundService();
     print('initializing notification service');
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('metro_yatra');
@@ -91,28 +162,6 @@ class NotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: selectNotification,
     );
-
-    const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      notificationChannelId, // id
-      'MY FOREGROUND SERVICE', // title
-      description:
-          'This channel is used for important notifications.', // description
-      importance: Importance.low, // importance must be at low or higher level
-    );
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-    service.configure(
-        iosConfiguration:
-            IosConfiguration(onForeground: (service) => {}, autoStart: false),
-        androidConfiguration: AndroidConfiguration(
-          onStart: onStart,
-          isForegroundMode: false,
-          autoStart: false,
-          notificationChannelId: notificationChannelId,
-          foregroundServiceNotificationId: notificationID,
-        ));
     print('notification service have been initialized');
   }
 
