@@ -21,7 +21,7 @@ class _DestinationAlertState extends State<DestinationAlert> {
         elevation: 15,
         backgroundColor: Colors.blue,
         title: const Text(
-          "First Last Metro",
+          "Destination Alert",
         ),
         centerTitle: true,
       ),

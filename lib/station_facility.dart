@@ -278,9 +278,11 @@ class FacilityBody extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          platform.trainTowards.stationName,
-                          style: const TextStyle(fontSize: 20),
+                        Expanded(
+                          child: Text(
+                            platform.trainTowards.stationName,
+                            style: const TextStyle(fontSize: 20),
+                          ),
                         ),
                       ],
                     ),
@@ -296,9 +298,11 @@ class FacilityBody extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        Text(
-                          platform.trainTowardsSecond != null ? platform.trainTowardsSecond!.stationName : 'NA',
-                          style: const TextStyle(fontSize: 20),
+                        Expanded(
+                          child: Text(
+                            platform.trainTowardsSecond != null ? platform.trainTowardsSecond!.stationName : 'NA',
+                            style: const TextStyle(fontSize: 20),
+                          ),
                         ),
                       ],
                     ),
