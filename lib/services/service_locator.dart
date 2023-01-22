@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:metro_yatra/config/app_config.dart';
 import 'package:metro_yatra/services/facility_service.dart';
+import 'package:metro_yatra/services/nearby_station_service.dart';
 import 'package:metro_yatra/services/notification_service.dart';
 import 'package:metro_yatra/services/route_service.dart';
 import 'package:metro_yatra/services/station_service.dart';
@@ -16,4 +17,6 @@ void setupLocator(String? env) async {
   locator.registerSingleton<NotificationService>(
       await NotificationService.getInstance());
   locator.registerSingleton(await StorageService.getInstance());
+  locator.registerSingleton(NearByStationService.getInstance());
+
 }

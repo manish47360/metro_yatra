@@ -38,22 +38,22 @@ class _MySwitchState extends State<MySwitch> {
       onChanged: (value) async {
         var isRunning = await service.isRunning();
         if (value) {
-          print('if value: $value');
+          debugPrint('if value: $value');
           if (await requestAccessAndPermission()) {
-            print("Routes: ${widget.response}");
+            debugPrint("Routes: ${widget.response}");
             addAlert();
             if (!isRunning) {
               await notificationService.startService();
             }
           }
         } else {
-          print('else value: $value');
+          debugPrint('else value: $value');
           removeAlert();
           if (isRunning) {
             service.invoke('stopService');
           }
           /*service.on('serviceStopped').listen((event) {setState(() {
-            print('event: ${event!['message']}');
+            debugPrint('event: ${event!['message']}');
           });});*/
         }
         // This is called when the user toggles the switch.

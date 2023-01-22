@@ -3,5 +3,5 @@
   "stations-endpoint": "/stations",
   "search-stations": "/delhi-metro-backend/route/{}/{}/short-distance/{}",
   "stations-info": "/station-info/{}/word",
-  "google-scrapper-host": "http://profilebabascraper-env-1.eba-ugg3bju7.ap-northeast-1.elasticbeanstalk.com"
+  "google-scrapper-host": "localhost:5000"
 }

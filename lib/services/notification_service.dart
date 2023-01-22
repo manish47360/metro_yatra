@@ -21,7 +21,7 @@ Future<void> onStart(ServiceInstance service) async {
   final prefs = await SharedPreferences.getInstance();
   var routeStations = prefs.getString('route-stations');
   if (routeStations == null){
-    print('No Route Found');
+    debugPrint('No Route Found');
     return;
   }
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -32,9 +32,9 @@ Future<void> onStart(ServiceInstance service) async {
       .map((e) => e.path)
       .map((e) => e.length)
       .reduce((value, element) => value + element);
-  print(
+  debugPrint(
       'stations: $routes, totalLines: ${routes.length}, totalStations: $totalStations');
-  print('onStart Called');
+  debugPrint('onStart Called');
   var routeCounter = 0;
   var stationCounter = 0;
 
@@ -45,28 +45,28 @@ Future<void> onStart(ServiceInstance service) async {
       if (routes.isNotEmpty) {
         final upComingRoute = routes[routeCounter];
         final upComingStation = upComingRoute.path[stationCounter];
-        print('up coming route: $upComingRoute');
-        print('up coming station: $upComingStation');
+        debugPrint('up coming route: $upComingRoute');
+        debugPrint('up coming station: $upComingStation');
         final distanceBetween = Geolocator.distanceBetween(
             position.latitude,
             position.longitude,
             upComingStation.latitude,
             upComingStation.longitude);
-        print('distance: $distanceBetween');
+        debugPrint('distance: $distanceBetween');
         if (distanceBetween < 50) {
           stationCounter++;
           if (stationCounter >= upComingRoute.path.length) {
-            print("Please interchange here.");
+            debugPrint("Please interchange here.");
             routeCounter++;
             if (routeCounter >= routes.length) {
-              print('You have arrived.');
+              debugPrint('You have arrived.');
               return;
             }
             stationCounter = 0;
           }
         }
       }
-      print(
+      debugPrint(
           'timer: ${DateTime.now()} - going on lat: ${position.latitude}, lng: ${position.longitude}');
       if (service is AndroidServiceInstance) {
         service.on('stopService').listen(
@@ -140,7 +140,7 @@ class NotificationService {
   }
 
   Future<void> _init() async {
-    print('initializing notification service');
+    debugPrint('initializing notification service');
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('metro_yatra');
 
@@ -162,12 +162,12 @@ class NotificationService {
       initializationSettings,
       onDidReceiveNotificationResponse: selectNotification,
     );
-    print('notification service have been initialized');
+    debugPrint('notification service have been initialized');
   }
 
   Future selectNotification(NotificationResponse response) async {
     if (kDebugMode) {
-      print('Response: ${response.payload}');
+      debugPrint('Response: ${response.payload}');
     }
   }
 }

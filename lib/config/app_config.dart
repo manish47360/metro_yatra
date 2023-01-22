@@ -8,6 +8,7 @@ class AppConfig{
   late final String stationEndpoint;
   late final String stationInfoEndpoint;
   late final String searchStationsEndpoint;
+  late final String googleScrapperHost;
   static AppConfig? _instance;
 
   AppConfig(Map<String, dynamic> json){
@@ -26,11 +27,12 @@ class AppConfig{
     stationInfoEndpoint = json['stations-info'];
     stationEndpoint = json['stations-endpoint'];
     searchStationsEndpoint = json['search-stations'];
+    googleScrapperHost = json['google-scrapper-host'];
   }
 
   static Future<Map<String, dynamic>> forEnvironment(String env) async {
     if (kDebugMode) {
-      print('ENV: $env');
+      debugPrint('ENV: $env');
     }
     final jsonString = await rootBundle.loadString(
       'assets/dev.json',

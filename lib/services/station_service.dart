@@ -25,13 +25,14 @@ class StationService {
     String endpoint =
         '${appConfig.metroHost}${appConfig.stationEndpoint}';
     Uri uri = Uri.parse(endpoint);
+    debugPrint('URI: $uri');
     var response = await client.get(uri);
     return compute(parseStations, response.body);
   }
 
   StationList parseStations(String responseBody) {
     if (kDebugMode) {
-      print('response body: $responseBody');
+      debugPrint('response body: $responseBody');
     }
     final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
     stationList = StationList.fromJson(parsed);

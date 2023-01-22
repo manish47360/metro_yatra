@@ -26,7 +26,7 @@ class RouteService{
         '${appConfig.metroHost}/delhi-metro-backend/route/$departStation/$destinationStation/short-distance/$formattedDateTime';
     Uri uri = Uri.parse(endpoint);
     if (kDebugMode) {
-      print('URI: $uri');
+      debugPrint('URI: $uri');
     }
     final response = await client.get(uri);
     return compute(parseRoutes, response.body);
@@ -34,7 +34,7 @@ class RouteService{
 
   DelhiMetroRouteResponse parseRoutes(String responseBody) {
     if (kDebugMode) {
-      print('response body: $responseBody');
+      debugPrint('response body: $responseBody');
     }
     final parsed = jsonDecode(responseBody);
     return DelhiMetroRouteResponse.fromJson(Map<String, dynamic>.from(parsed));

@@ -29,8 +29,8 @@ class MetroRoute extends StatelessWidget {
           future: routeService.fetchRoutes(http.Client(), departStation, destinationStation),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              print(snapshot.stackTrace);
-              print(snapshot.error);
+              debugPrint(snapshot.stackTrace.toString());
+              debugPrint(snapshot.error.toString());
               return const Center(
                 child: Text('An error has occurred.'),
               );

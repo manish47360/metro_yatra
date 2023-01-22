@@ -33,8 +33,8 @@ class _FacilityState extends State<Facility> {
               http.Client(), widget.stationCode.code),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              print(snapshot.stackTrace);
-              print(snapshot.error);
+              debugPrint(snapshot.stackTrace.toString());
+              debugPrint(snapshot.error.toString());
               return const Center(
                 child: Text('An error has occurred.'),
               );

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<Position> determinePosition() async {
@@ -5,18 +6,18 @@ Future<Position> determinePosition() async {
   LocationPermission permission;
   serviceEnabled = await Geolocator.isLocationServiceEnabled();
   if (!serviceEnabled) {
-    print('location service is disabled.');
+    debugPrint('location service is disabled.');
     return Future.error('Location services are disabled.');
   }
 
   permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
-    print('permission is denied.');
+    debugPrint('permission is denied.');
     return Future.error('Location permissions are denied');
   }
 
   if (permission == LocationPermission.deniedForever) {
-    print('permission is denied forever.');
+    debugPrint('permission is denied forever.');
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
@@ -35,7 +36,7 @@ Future<bool> requestAccessAndPermission() async {
     // Location services are not enabled don't continue
     // accessing the position and request users of the
     // App to enable the location services.
-    print('service is disabled opening setting.');
+    debugPrint('service is disabled opening setting.');
     await Geolocator.openLocationSettings();
     return Future.error('Location services are disabled.');
   }

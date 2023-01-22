@@ -14,12 +14,12 @@ class FacilityService{
   Future<DelhiMetroStationFacilities> fetchFacilities(http.Client client , String stationCode) async{
     String endPoint = 'http://delhimetrobackendtest-env.eba-bvjxgwjk.ap-northeast-1.elasticbeanstalk.com/station-info/$stationCode/word';
     Uri uri = Uri.parse(endPoint);
-    print('URI: $uri');
+    debugPrint('URI: $uri');
     final response = await client.get(uri);
     return compute(parseFacilities, response.body);
   }
   DelhiMetroStationFacilities parseFacilities(String responseBody){
-    print('response body: $responseBody');
+    debugPrint('response body: $responseBody');
     final parsed = jsonDecode(responseBody);
     return DelhiMetroStationFacilities.fromJson(Map<String,dynamic>.from(parsed));
   }
