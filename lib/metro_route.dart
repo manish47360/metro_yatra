@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 var routeService = locator<RouteService>();
 
-class MetroRoute extends StatelessWidget {
+class MetroRoute extends StatefulWidget {
   final String departStation, destinationStation;
 
   const MetroRoute(
@@ -19,29 +19,43 @@ class MetroRoute extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<MetroRoute> createState() => _MetroRouteState();
+}
+
+class _MetroRouteState extends State<MetroRoute> {
+  late Future<DelhiMetroRouteResponse> _route;
+
+  @override
+  void initState() {
+    super.initState();
+    _route = routeService.fetchRoutes(
+        http.Client(), widget.departStation, widget.destinationStation);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text('Route'),
-        ),
-        body: FutureBuilder<DelhiMetroRouteResponse>(
-          future: routeService.fetchRoutes(http.Client(), departStation, destinationStation),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              debugPrint(snapshot.stackTrace.toString());
-              debugPrint(snapshot.error.toString());
-              return const Center(
-                child: Text('An error has occurred.'),
-              );
-            } else if (snapshot.hasData) {
-              return RoutePage(snapshot.data!);
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ) /*,*/
-        );
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Route'),
+      ),
+      body: FutureBuilder<DelhiMetroRouteResponse>(
+        future: _route,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            debugPrint(snapshot.stackTrace.toString());
+            debugPrint(snapshot.error.toString());
+            return const Center(
+              child: Text('An error has occurred.'),
+            );
+          } else if (snapshot.hasData) {
+            return RoutePage(snapshot.data!);
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ), /*,*/
+    );
   }
 }
 

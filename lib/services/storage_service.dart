@@ -6,41 +6,49 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService{
   static const String routeStations = 'route-stations';
-  late final SharedPreferences prefs;
+  late final SharedPreferences _prefs;
   static final StorageService _instance = StorageService._internal();
   StorageService._internal();
 
   static Future<StorageService> getInstance() async {
-    _instance._init();
+    await _instance._init();
     return _instance;
   }
 
-  void _init() async{
-    prefs = await SharedPreferences.getInstance();
+  Future<void> _init() async{
+    _prefs = await SharedPreferences.getInstance();
   }
 
   void setRouteStationsString(String value){
-    prefs.setString(routeStations, value);
+    _prefs.setString(routeStations, value);
   }
 
   void removeStations(){
-    prefs.remove(routeStations);
+    _prefs.remove(routeStations);
   }
 
   void setStationAlert(String from, String to){
-    prefs.setBool('$from:$to', true);
+    _prefs.setBool('$from:$to', true);
   }
 
   void removeStationAlert(String from, String to){
-    prefs.setBool('$from:$to', false);
+    _prefs.setBool('$from:$to', false);
+  }
+
+  void deleteStationAlert(String from, String to) async {
+    await _prefs.remove('$from:$to');
+  }
+
+  void removeCurrentStationAlert() async {
+    removeStations();
   }
 
   bool isAlertPresent(String from, String to){
-    return prefs.getBool('$from:$to') ?? false;
+    return _prefs.getBool('$from:$to') ?? false;
   }
 
   DelhiMetroRouteResponse? getRouteStations() {
-    var stations = prefs.getString(routeStations);
+    var stations = _prefs.getString(routeStations);
     return stations != null ? DelhiMetroRouteResponse.fromJson(jsonDecode(stations)) : null;
   }
 }

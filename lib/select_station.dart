@@ -38,6 +38,7 @@ class _StationListRouteState extends State<StationListRoute> {
                 setState(() => search = value);
               },
               controller: stationSelected,
+              autofocus: true,
             ),
             Expanded(
               child: ListView.builder(

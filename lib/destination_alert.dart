@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metro_yatra/delhi_metro_route_response.dart';
 import 'package:metro_yatra/metro_route.dart';
 import 'package:metro_yatra/services/service_locator.dart';
 import 'package:metro_yatra/services/storage_service.dart';
@@ -13,9 +14,16 @@ class DestinationAlert extends StatefulWidget {
 }
 
 class _DestinationAlertState extends State<DestinationAlert> {
+  late final DelhiMetroRouteResponse? routeStations;
+
+  @override
+  void initState() {
+    super.initState();
+    routeStations = storageService.getRouteStations();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var routeStations = storageService.getRouteStations();
     return Scaffold(
       appBar: AppBar(
         elevation: 15,
@@ -26,7 +34,7 @@ class _DestinationAlertState extends State<DestinationAlert> {
         centerTitle: true,
       ),
       body: routeStations != null
-          ? RoutePage(routeStations)
+          ? RoutePage(routeStations!)
           : const Center(
               child: Text('No Alerts!'),
             ),

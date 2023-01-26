@@ -26,7 +26,6 @@ class _MySwitchState extends State<MySwitch> {
   void initState() {
     super.initState();
     light = storageService.isAlertPresent(widget.response.from, widget.response.to);
-
   }
 
   @override
