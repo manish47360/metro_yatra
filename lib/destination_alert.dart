@@ -15,7 +15,6 @@ class DestinationAlert extends StatefulWidget {
 
 class _DestinationAlertState extends State<DestinationAlert> {
   late final DelhiMetroRouteResponse? routeStations;
-
   @override
   void initState() {
     super.initState();

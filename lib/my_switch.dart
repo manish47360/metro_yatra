@@ -10,8 +10,10 @@ import 'package:metro_yatra/services/storage_service.dart';
 
 var notificationService = locator<NotificationService>();
 var storageService = locator<StorageService>();
+
 class MySwitch extends StatefulWidget {
   final DelhiMetroRouteResponse response;
+
   const MySwitch({super.key, required this.response});
 
   @override
@@ -25,11 +27,26 @@ class _MySwitchState extends State<MySwitch> {
   @override
   void initState() {
     super.initState();
-    light = storageService.isAlertPresent(widget.response.from, widget.response.to);
+    light =
+        storageService.isAlertPresent(widget.response.from, widget.response.to);
   }
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: service.on(JourneyState.destinationArrived),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          setState(() {
+            light = false;
+          });
+        }
+        return getSwitch();
+      },
+    );
+  }
+
+  Widget getSwitch() {
     return Switch(
       // This bool value toggles the switch.
       value: light,
@@ -68,7 +85,7 @@ class _MySwitchState extends State<MySwitch> {
     storageService.setStationAlert(widget.response.from, widget.response.to);
   }
 
-  void removeAlert(){
+  void removeAlert() {
     storageService.removeStations();
     storageService.removeStationAlert(widget.response.from, widget.response.to);
   }

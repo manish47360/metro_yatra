@@ -57,6 +57,7 @@ Future<void> onStart(ServiceInstance service) async {
         debugPrint('up coming route: $upComingRoute');
         debugPrint('up coming station: $upComingStation');
         showNotification(flutterLocalNotificationsPlugin, 'Next station: ${upComingStation.name}');
+        service.invoke(upComingStation.name);
         final distanceBetween = Geolocator.distanceBetween(
             position.latitude,
             position.longitude,
@@ -88,7 +89,7 @@ Future<void> onStart(ServiceInstance service) async {
               flutterLocalNotificationsPlugin.cancel(notificationID);
               await prefs.clear();
               await prefs.remove(StorageService.routeStations);
-              service.invoke('completed');
+              service.invoke(JourneyState.destinationArrived);
               await service.stopSelf();
               return;
             }
@@ -230,4 +231,9 @@ class NotificationService {
   Future selectNotification(NotificationResponse response) async {
     navigatorKey.currentState?.pushNamed('destination_alert');
   }
+}
+
+abstract class JourneyState{
+  static const destinationArrived = 'destinationArrived';
+  static const stationArrived = 'stationArrived';
 }
